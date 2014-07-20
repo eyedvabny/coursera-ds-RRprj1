@@ -1,7 +1,3 @@
----
-output:
-  html_document: default
----
 # Reproducible Research: Peer Assessment 1
 
 The goal of this assignment is to use R Markdown for an exploratory study of human daily activity based off reported number of steps recorded by a personal fitness tracker, such as Fitbit or Jawbone Up. 
@@ -58,10 +54,10 @@ plot(step_mean_interval,type="l",xlab="5-minute interval",ylab="Average # of ste
 
 
 ```r
-best_interval <- step_mean_interval$interval[which.max(step_mean_interval$steps)]
+best_interval <- step_mean_interval$interval[which.max(step_mean_interval$avg_steps)]
 ```
 
-Time interval with most average steps is: ****
+Time interval with most average steps is: **835**
 
 ## Imputing missing values
 
