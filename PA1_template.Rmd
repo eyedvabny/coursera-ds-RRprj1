@@ -1,4 +1,16 @@
+---
+output:
+  md_document:
+    variant: markdown_github
+  html_document:
+    self_contained: true
+---
 # Reproducible Research: Peer Assessment 1
+
+```{r echo=FALSE}
+# I really hate where R Markdown v2 stores the figures
+knitr::opts_chunk$set(fig.path="figures/")
+```
 
 The goal of this assignment is to use R Markdown for an exploratory study of human daily activity based off reported number of steps recorded by a personal fitness tracker, such as Fitbit or Jawbone Up. 
 
@@ -19,7 +31,7 @@ act_data <-read.csv(unzip("activity.zip"),colClasses=c('numeric','Date','numeric
 
 We can sum the number of steps taken per day for every day:
 
-```{r}
+```{r total_step_hist}
 step_sum<-aggregate(steps~date,act_data,sum)
 hist(step_sum$steps,breaks=20,xlab="Steps per day",main="")
 ```
@@ -38,7 +50,7 @@ step_median<-median(step_sum$steps)
 
 Here we present the number of steps taken per a 5-minute interval of a day, averaged across the days present in the dataset. There are 24*60/5 = **288** intervals.
 
-```{r}
+```{r avg_step_interval}
 step_mean_interval <- aggregate(steps ~ interval,act_data,mean)
 names(step_mean_interval)<-c("interval","avg_steps")
 plot(step_mean_interval,type="l",xlab="5-minute interval",ylab="Average # of steps",main="")
@@ -71,7 +83,7 @@ comp_act_data$steps[na_index]<-comp_act_data$avg_steps[na_index]
 
 Now that we have values for all time intervals we can repeat the histogramming from above:
 
-```{r}
+```{r comp_total_step_hist}
 step_sum<-aggregate(steps~date,comp_act_data,sum)
 hist(step_sum$steps,breaks=20,xlab="Steps per day",main="")
 ```
@@ -97,7 +109,7 @@ comp_act_data$day_type <- factor(comp_act_data$day_type,levels=c(F,T),labels=c("
 
 Let's plot what the average number of steps is for a weekday and for a weekend:
 
-```{r}
+```{r wkend_vs_wkday_activity}
 step_mean_day <- aggregate(steps ~ interval + day_type,comp_act_data,mean)
 
 library(lattice) #Prettier plot
